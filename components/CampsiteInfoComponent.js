@@ -7,7 +7,8 @@ import { baseUrl } from '../shared/baseUrl';
 const mapStateToProps = state => {
     return {
         campsites: state.campsites,
-        comments: state.comments
+        comments: state.comments,
+        favorites: state.favorites
     };
 };
 
@@ -81,11 +82,11 @@ class CampsiteInfo extends Component {
 
     render() {
         const campsiteId = this.props.navigation.getParam('campsiteId');
-        const campsite = this.props.campsites.campsites(campsite => campsite.id === campsiteId)[0];
-        const comments = this.props.comments.comments(comments => comments.campsiteId ===  campsiteId);
+        const campsite = this.props.campsites.campsites.filter(campsite => campsite.id === campsiteId)[0];
+        const comments = this.props.comments.comments.filter(comment => comment.campsiteId === campsiteId);
         return (
             <ScrollView>
-                <RenderCampsite campsite={campsite} 
+                <RenderCampsite campsite={campsite}
                     favorite={this.state.favorite}
                     markFavorite={() => this.markFavorite()}
                 />
