@@ -29,6 +29,8 @@ function RenderCampsite(props) {
 
     const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
 
+    const recognizeComment = ({dx}) => (dx > 200) ? true : false;
+
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
@@ -55,6 +57,8 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 );
+            } else if (recognizeComment(gestureState)) {
+                props.onShowModal()
             }
             return true;
         }
@@ -209,8 +213,8 @@ class CampsiteInfo extends Component {
                             placeholder='Comment'
                             leftIcon={{type: 'font-awesome', name: 'comment-o'}}
                             leftIconContainerStyle={{paddingRight: 10}}
-                            onChangeText={comment => this.setState({comment: comment})}
-                            value={this.state.author}
+                            onChangeText={text => this.setState({text: text})}
+                            value={this.state.text}
                         />
                         <View style={{margin: 10}}>
                             <Button
